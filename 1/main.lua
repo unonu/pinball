@@ -66,6 +66,7 @@ function ball.make(x,y,iV)
 	b.forces = {iV}
 	b.vec = {0,0} --<-- I think it looks like an owl
 	b.gravity = .986
+	-- b.gravity = -.986
 
 	b.color = {math.random(128,255),math.random(128,255),math.random(128,255)}
 
@@ -106,13 +107,12 @@ function ball:update(dt)
 	self.x = self.x + self.vec[1]*dt
 	self.y = self.y + self.vec[2]*dt
 
-	-- if self.vec[1] ~= 0 then self.vec[1] = self.vec[1] - self.vec[1] / (99 * dt) end
 	if self.vec[1] ~= 0 then self.vec[1] = self.vec[1] - self.vec[1]* self.speed/6000 end
-	-- print(self.speed/6000)
 	if math.abs(self.vec[1]) < .001 then self.vec[1] = 0 end
 	if math.abs(self.vec[2]) < .001 then self.vec[2] = 0 end
-	self.vec[2] = self.vec[2] + self.gravity
-	-- self.vec[2] = self.vec[2] + self.gravity / self.speed
+	-- self.vec[2] = self.vec[2] + self.gravity
+	local gravO = math.random(1,2)
+	self.vec[gravO] = self.vec[gravO] + math.random(-.9,.9)
 
 	--collision
 	for i=1, #bodies do
@@ -279,9 +279,9 @@ function love.draw()
 
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.draw(bg)
-	for i=1, #bodies do
-		love.graphics.line(bodies[i][1][1], bodies[i][1][2], bodies[i][2][1], bodies[i][2][2])
-	end
+	-- for i=1, #bodies do
+	-- 	love.graphics.line(bodies[i][1][1], bodies[i][1][2], bodies[i][2][1], bodies[i][2][2])
+	-- end
 	bricks:draw()
 	for i=1, #balls do
 		balls[i]:draw()
